@@ -1,0 +1,65 @@
+#!/bin/bash
+echo "instalar o tor  s/n"
+if [ $tor = "s" ]
+	then 
+	apt-get install tor 
+	apt-get install tor-arm
+	apt-get install privoxy
+	if
+		echo "e ubuntu "
+		echo "instalar o jonDO s/n"
+		if [ $jonDO = "s"]
+			wget -c https://anonymous-proxy-servers.net/downloads/jondo_all.deb > /home/
+			wget -c https://anonymous-proxy-servers.net/en/downloads/jondofox-en_all.deb > /home/
+			then [ $jonDO = "n"]
+			exit 
+			if 
+				echo "iniciando a configuração "
+
+
+			echo "obrigado por instalar o jonDO"
+			echo 
+			echo
+			echo 
+			echo " quer configurar o tor  s/n"
+			if  [ $tor = "s"]
+				sudo apt-get update
+				sudo apt-get install deb.torproject.org-keyring tor 
+				gpg --keyserver hkp://subkeys.pgp.net --recv-keys 16BA136C && gpg --export 16BA136C | sudo apt-key add -
+				sudo apt-get update
+				sudo apt-get -t squeeze-backports install tor
+				sudo service tor start 
+				sudo lsof -ni|grep tor
+				echo "install polipo"
+				sudo apt-get install polipo
+				sudo mv /etc/polipo/config /etc/polipo/config-ORIGINAL 
+cat > /etc/polipo/config
+#!/bin/bash
+# Generally, this file goes in /etc/privoxy/config
+#
+# Tor listens as a SOCKS4a proxy here:
+forward-socks4a / 127.0.0.1:9050 .
+confdir /etc/privoxy
+logdir /var/log/privoxy
+# actionsfile standard  # Internal purpose, recommended
+actionsfile default.action   # Main actions file
+actionsfile user.action      # User customizations
+filterfile default.filter
+
+# Don't log interesting things, only startup messages, warnings and errors
+logfile logfile
+#jarfile jarfile
+#debug   0    # show each GET/POST/CONNECT request
+debug   4096 # Startup banner and warnings
+debug   8192 # Errors - *we highly recommended enabling this*
+
+user-manual /usr/share/doc/privoxy/user-manual
+listen-address  127.0.0.1:8118
+toggle  1
+enable-remote-toggle 0
+enable-edit-actions 0
+enable-remote-http-toggle 0
+buffer-limit 4096
+
+#
+
