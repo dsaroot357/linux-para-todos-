@@ -1,1 +1,1512 @@
-c
+#! /bin/bash
+
+echo "vamos instalar e configurar o usuario no sistema "
+if [[ ! $(whoami) = "root" ]]; then 
+	echo "==================================================="
+echo "OPS!Você tem que execultar esse script como root"
+    echo "==================================================="
+    exit 1
+    if 
+    }
+#}}}
+#função para gera opção escolida pelo usuario {{{
+select_op(){
+case $op in 
+    	1)    #configurar o usuario 
+               echo "=================================="
+               echo " dsaroot script "
+               echo "=================================="
+               echo " Digite o nome do usuario para cadastro"
+               read name 
+               adduser $name 
+               passwd $nome 
+               echo "cadastro feito no sistma "
+               echo "deseja fazer outra configuração? [s/n]"
+               read -p "Digite: " esc 
+               case $esc in 
+               	S/s)
+                    
+                    sleep 2 
+                    tela_opcoes
+                    select_op
+                    ;;
+                N/n)
+
+                    echo "=========================================="                  
+                    echo "obrigado por esta utilizando esse script :)"
+                    echo "=========================================="
+                    sleep 2
+                    exit 
+                    ;;
+                *)
+                    echo "================================="
+                    echo " voce nao digitou corretamente !"
+                    echo "================================="
+                    sleep 2                     
+                    exit
+                    ;;
+                    esac
+                    ;;
+        2)     #instalar econfigurar o  tor "
+                    echo "=================================="
+                    echo " dsaroot script"
+                    echo "=================================="
+                    cd $HOME  #  diretorio do usuario 
+                    mkdir "dsaroot-script" # pasta criada 
+                    cd dsaroot-script #criar o diretorio para colocar os arquivos temporarios do script 
+                    cat <EOF >> install.sh 
+                    apt-get update
+                    #!/bin/bash
+                    apt-get upgrade 
+                    apt-get dist-upgrade 
+                    apt-get install tor privoxy squid haproxy
+                    EOF 
+                    cat <EOF > serviços.sh 
+                    echo " para todos os serviços  "
+                    service squid3 stop
+                    service privoxy stop
+                    service tor stop
+                    EOF
+                    cat <EOF > criando-arquivos-de-configuração-tor.sh 
+                    #copiar todos os arquivos torrc para a pasta etc/tor 
+                    EOF
+                    cat <EOF > torrc-1
+                    SocksBindAddress 127.0.0.1 # Aceitar ligações apenas de localhost
+                    SocksBindAddress [seu indereço ip] :9050 # e necessário para o  proxychains
+                    SocksPolicy accept *
+                    allowUnverifiedNodes middle,rendezvous
+                    log notice syslog 
+                    RunAsDaemon 1 
+                    User mortebranca357
+                    CircuitBuildTimeout 30 
+                    NumEntryGards 6 
+                    KeepalivePeriod 60
+                    NewCircuitPeriod 15
+                    SocksPort 9050 # Qual porta abrir conexões de aplicativos locais
+                    DataDirectory /var/lib/tor1
+                    PidFile /var/run/tor/tor-1.pid
+                    EOF 
+                    cat <EOF > torrc-2
+                    SocksBindAddress 127.0.0.1 # Aceitar ligações apenas de localhost
+                    SocksBindAddress [YOURIPADDRESS]:9150 #Esta É necessário para prox
+                    SocksPolicy accept * # Você pode fazer isso um pouco mais restritiva
+                    AllowUnverifiedNodes middle,rendezvous
+                    Log notice syslog
+                    RunAsDaemon 1
+                    User mortebranca357
+                    CircuitBuildTimeout 30
+                    NumEntryGuards 6
+                    KeepalivePeriod 60
+                    NewCircuitPeriod 15
+                    SocksPort 9150
+                    ControlPort 9151
+                    DataDirectory /var/lib/tor2
+                    PidFile /var/run/tor/tor-2.pid
+                    EOF 
+                    cat <EOF > torrc-3
+                    SocksBindAddress 127.0.0.1 
+                    SocksBindAddress [YOURIPADDRESS]:9250  
+                    SocksPolicy accept *  
+                    AllowUnverifiedNodes middle,rendezvous
+                    Log notice syslog
+                    RunAsDaemon 1
+                    User debian-tor
+                    CircuitBuildTimeout 30
+                    NumEntryGuards 6
+                    KeepalivePeriod 60
+                    NewCircuitPeriod 15
+                    SocksPort 9250
+                    ControlPort 9251
+                    DataDirectory /var/lib/tor3
+                    PidFile /var/run/tor/tor-3.pid
+                    EOF 
+                    cat <EOF > torrc-4
+                    SocksBindAddress 127.0.0.1
+                    SocksBindAddress [YOURIPADDRESS]:9350
+                    SocksPolicy accept *
+                    AllowUnverifiedNodes middle,rendezvous
+                    Log notice syslog
+                    RunAsDaemon 1
+                    User mortebranca357
+                    CircuitBuildTimeout 30
+                    NumEntryGuards 6
+                    KeepalivePeriod 60
+                    NewCircuitPeriod 15
+                    SocksPort 9350
+                    ControlPort 9351
+                    DataDirectory /var/lib/tor4
+                    PidFile /var/run/tor/tor-4.pid
+                    EOF 
+                    cat <EOF > torrc-5
+                    SocksBindAddress 127.0.0.1
+                    SocksBindAddress [YOURIPADDRESS]:9450 
+                    SocksPolicy accept * 
+                    AllowUnverifiedNodes middle,rendezvous
+                    Log notice syslog
+                    RunAsDaemon 1
+                    User mortebranca357
+                    CircuitBuildTimeout 30
+                    NumEntryGuards 6
+                    KeepalivePeriod 60
+                    NewCircuitPeriod 15
+                    SocksPort 9450
+                    ControlPort 9451
+                    DataDirectory /var/lib/tor5
+                    PidFile /var/run/tor/tor-5.pid
+                    EOF 
+                    cat <EOF> torrc-6
+                    SocksBindAddress 127.0.0.1 
+                    SocksBindAddress [YOURIPADDRESS]:9550  
+                    SocksPolicy accept *  
+                    AllowUnverifiedNodes middle,rendezvous
+                    Log notice syslog
+                    RunAsDaemon 1
+                    User mortebranca357
+                    CircuitBuildTimeout 30
+                    NumEntryGuards 6
+                    KeepalivePeriod 60
+                    NewCircuitPeriod 15
+                    SocksPort 9550
+                    ControlPort 9551
+                    DataDirectory /var/lib/tor6
+                    PidFile /var/run/tor/tor-6.pid
+                    EOF 
+                    cat <EOF > torrc-7
+                    SocksBindAddress 127.0.0.1 
+                    SocksBindAddress [YOURIPADDRESS]:9750  
+                    SocksPolicy accept *  
+                    AllowUnverifiedNodes middle,rendezvous
+                    Log notice syslog
+                    RunAsDaemon 1
+                    User  mortebranca357
+                    CircuitBuildTimeout 30
+                    NumEntryGuards 6
+                    KeepalivePeriod 60
+                    NewCircuitPeriod 15
+                    SocksPort 9750
+                    ControlPort 9751
+                    DataDirectory /var/lib/tor8
+                    PidFile /var/run/tor/tor-8.pid
+                    EOF 
+                    cat <EOF > torrc-8
+                    SocksBindAddress 127.0.0.1 
+                    SocksBindAddress [YOURIPADDRESS]:9750  
+                    SocksPolicy accept * 
+                    AllowUnverifiedNodes middle,rendezvous
+                    Log notice syslog
+                    RunAsDaemon 1
+                    User mortebranca357
+                    CircuitBuildTimeout 30
+                    NumEntryGuards 6
+                    KeepalivePeriod 60
+                    NewCircuitPeriod 15
+                    SocksPort 9750
+                    ControlPort 9751
+                    DataDirectory /var/lib/tor8
+                    PidFile /var/run/tor/tor-8.pid
+                    EOF 
+                    cat <EOF > variavel-tor-install.sh 
+                    install -o debian-tor -g debian-tor -m 700 -d /var/lib/tor1
+                    install -o debian-tor -g debian-tor -m 700 -d /var/lib/tor2
+                    install -o debian-tor -g debian-tor -m 700 -d /var/lib/tor3
+                    install -o debian-tor -g debian-tor -m 700 -d /var/lib/tor4
+                    install -o debian-tor -g debian-tor -m 700 -d /var/lib/tor5
+                    install -o debian-tor -g debian-tor -m 700 -d /var/lib/tor6
+                    install -o debian-tor -g debian-tor -m 700 -d /var/lib/tor7
+                    install -o debian-tor -g debian-tor -m 700 -d /var/lib/tor8
+                    cat <EOF > configuração-tor-no-etc-tor.sh
+                    cp /etc/init.d/tor /etc/init.d/tor.orig
+                    rm /etc/init.d/tor
+                    touch /etc/init.d/tor
+                    chmod +x /etc/init.d/tor
+                    EOF
+ echo "deseja fazer outra configuração? [s/n]"
+               read -p "Digite: " esc 
+               case $esc in 
+                S/s)
+                    
+                    sleep 2 
+                    tela_opcoes
+                    select_op
+                    ;;
+                N/n)
+
+                    echo "=========================================="                  
+                    echo "obrigado por esta utilizando esse script :)"
+                    echo "=========================================="
+                    sleep 2
+                    exit 
+                    ;;
+                *)
+                    echo "================================="
+                    echo " voce nao digitou corretamente !"
+                    echo "================================="
+                    sleep 2                     
+                    exit
+                    ;;
+                    esac
+                    ;;
+
+        2) #configurar o squid para abitar o tor 
+           
+            echo"============================================"
+            echo"            dsaroot-script                   " 
+            echo"============================================"
+            apt-get update || apt-get dist-upgrade || apt-get upgrade
+            echo "           vamos inciar                    "           
+            mv /etc/privoxy/config /home/dsaroot-script/
+            
+            cat <EOF> config-1
+            user-manual /usr/share/doc/privoxy/user-manual
+            confdir /etc/privoxy
+            actionsfile match-all.action #Ações que são aplicadas a todos os sites e talvez afastada mais tarde.
+            actionsfile default.action # Arquivo ações principais
+            actionsfile user.action # personalizações do usuário
+            filterfile default.filter
+            logfile logfile
+            toggle 1
+            enable-remote-toggle 0
+            enable-remote-http-toggle 0
+            enable-edit-actions 0
+            enforce-blocks 0
+            buffer-limit 4096
+            forwarded-connect-retries 0
+            accept-intercepted-requests 0
+            allow-cgi-request-crunching 0
+            split-large-forms 0
+            keep-alive-timeout 5
+            socket-timeout 300
+            handle-as-empty-doc-returns-ok 1
+            logdir /var/log/privoxy1
+            listen-address localhost:8118
+            forward-socks5 / 127.0.0.1:9050 .
+            EOF
+            
+            cat <EOF> config-2
+            user-manual /usr/share/doc/privoxy/user-manual
+            confdir /etc/privoxy
+            actionsfile match-all.action 
+            actionsfile default.action 
+            actionsfile user.action
+            filterfile default.filter
+            logfile logfile
+            toggle 1
+            enable-remote-toggle 0
+            enable-remote-http-toggle 0
+            enable-edit-actions 0
+            enforce-blocks 0
+            buffer-limit 4096
+            forwarded-connect-retries 0
+            accept-intercepted-requests 0
+            allow-cgi-request-crunching 0
+            split-large-forms 0
+            keep-alive-timeout 5
+            socket-timeout 300
+            handle-as-empty-doc-returns-ok 1
+            logdir /var/log/privoxy2
+            listen-address localhost:8129
+            forward-socks5 / 127.0.0.1:9150 .
+            EOF
+            
+            cat <EOF>config-3
+            user-manual /usr/share/doc/privoxy/user-manual
+            confdir /etc/privoxy
+            actionsfile match-all.action 
+            actionsfile default.action 
+            actionsfile user.action
+            filterfile default.filter
+            logfile logfile
+            toggle 1
+            enable-remote-toggle 0
+            enable-remote-http-toggle 0
+            enable-edit-actions 0
+            enforce-blocks 0
+            buffer-limit 4096
+            forwarded-connect-retries 0
+            accept-intercepted-requests 0
+            allow-cgi-request-crunching 0
+            split-large-forms 0
+            keep-alive-timeout 5
+            socket-timeout 300
+            handle-as-empty-doc-returns-ok 1
+            logdir /var/log/privoxy3
+            listen-address localhost:8230
+            forward-socks5 / 127.0.0.1:9250 .
+            EOF
+
+            cat <EOF> config-4
+            user-manual /usr/share/doc/privoxy/user-manual
+            confdir /etc/privoxy
+            actionsfile match-all.action 
+            actionsfile default.action
+            actionsfile user.action 
+            filterfile default.filter
+            logfile logfile
+            toggle 1
+            enable-remote-toggle 0
+            enable-remote-http-toggle 0
+            enable-edit-actions 0
+            enforce-blocks 0
+            buffer-limit 4096
+            forwarded-connect-retries 0
+            accept-intercepted-requests 0
+            allow-cgi-request-crunching 0
+            split-large-forms 0
+            keep-alive-timeout 5
+            socket-timeout 300
+            handle-as-empty-doc-returns-ok 1
+            logdir /var/log/privoxy4
+            listen-address localhost:8321
+            forward-socks5 / 127.0.0.1:9350 .
+            EOF
+
+            cat <EOF> config-5
+            user-manual /usr/share/doc/privoxy/user-manual
+            confdir /etc/privoxy
+            actionsfile match-all.action 
+            actionsfile default.action 
+            actionsfile user.action 
+            filterfile default.filter
+            logfile logfile
+            toggle 1
+            enable-remote-toggle 0
+            enable-remote-http-toggle 0
+            enable-edit-actions 0
+            enforce-blocks 0
+            buffer-limit 4096
+            forwarded-connect-retries 0
+            accept-intercepted-requests 0
+            allow-cgi-request-crunching 0
+            split-large-forms 0
+            keep-alive-timeout 5
+            socket-timeout 300
+            handle-as-empty-doc-returns-ok 1
+            logdir /var/log/privoxy5
+            listen-address localhost:8421
+            forward-socks5 / 127.0.0.1:9450 .
+            EOF
+
+            cat <EOF>config-6
+            user-manual /usr/share/doc/privoxy/user-manual
+            confdir /etc/privoxy
+            actionsfile match-all.action 
+            actionsfile default.action 
+            actionsfile user.action 
+            filterfile default.filter
+            logfile logfile
+            toggle 1
+            enable-remote-toggle 0
+            enable-remote-http-toggle 0
+            enable-edit-actions 0
+            enforce-blocks 0
+            buffer-limit 4096
+            forwarded-connect-retries 0
+            accept-intercepted-requests 0
+            allow-cgi-request-crunching 0
+            split-large-forms 0
+            keep-alive-timeout 5
+            socket-timeout 300
+            handle-as-empty-doc-returns-ok 1
+            logdir /var/log/privoxy6
+            listen-address localhost:8522
+            forward-socks5 / 127.0.0.1:9550 .
+            EOF
+
+            cat <EOF> config-7
+            user-manual /usr/share/doc/privoxy/user-manual
+            confdir /etc/privoxy
+            actionsfile match-all.action 
+            actionsfile default.action 
+            actionsfile user.action 
+            filterfile default.filter
+            logfile logfile
+            toggle 1
+            enable-remote-toggle 0
+            enable-remote-http-toggle 0
+            enable-edit-actions 0
+            enforce-blocks 0
+            buffer-limit 4096
+            forwarded-connect-retries 0
+            accept-intercepted-requests 0
+            allow-cgi-request-crunching 0
+            split-large-forms 0
+            keep-alive-timeout 5
+            socket-timeout 300
+            handle-as-empty-doc-returns-ok 1
+            logdir /var/log/privoxy7
+            listen-address localhost:8623
+            forward-socks5 / 127.0.0.1:9650 .
+            EOF
+
+            cat <EOF> config-8
+            user-manual /usr/share/doc/privoxy/user-manual
+            confdir /etc/privoxy
+            actionsfile match-all.action 
+            actionsfile default.action
+            actionsfile user.action
+            filterfile default.filter
+            logfile logfile
+            toggle 1
+            enable-remote-toggle 0
+            enable-remote-http-toggle 0
+            enable-edit-actions 0
+            enforce-blocks 0
+            buffer-limit 4096
+            forwarded-connect-retries 0
+            accept-intercepted-requests 0
+            allow-cgi-request-crunching 0
+            split-large-forms 0
+            keep-alive-timeout 5
+            socket-timeout 300
+            handle-as-empty-doc-returns-ok 1
+            logdir /var/log/privoxy8
+            listen-address localhost:8724
+            forward-socks5 / 127.0.0.1:9750 .
+            EOF
+
+            cat <EOF> configurar-o-privoxy.sh
+            install -o privoxy -g nogroup -m 750 -d /var/log/privoxy1
+            install -o privoxy -g nogroup -m 750 -d /var/log/privoxy2
+            install -o privoxy -g nogroup -m 750 -d /var/log/privoxy3
+            install -o privoxy -g nogroup -m 750 -d /var/log/privoxy4
+            install -o privoxy -g nogroup -m 750 -d /var/log/privoxy5
+            install -o privoxy -g nogroup -m 750 -d /var/log/privoxy6
+            install -o privoxy -g nogroup -m 750 -d /var/log/privoxy7
+            install -o privoxy -g nogroup -m 750 -d /var/log/privoxy8
+
+            cat <EOF> configurar-o-privoxy-2.sh
+            cp /etc/init.d/privoxy /etc/init.d/privoxy.orig
+            rm /etc/init.d/privoxy
+            nano /etc/init.d/privoxy
+            chmod +x /etc/init.d/privoxy
+            
+            #arquivo de configuração do privo
+            cat <EOF> privoxy
+            #! /bin/bash
+### BEGIN INIT INFO
+# Provides:          privoxy
+# Required-Start:    $local_fs $remote_fs $network $time
+# Required-Stop:     $local_fs $remote_fs $network $time
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Privacy enhancing HTTP Proxy
+# Description:       Privoxy is a web proxy with advanced filtering
+#                    capabilities for protecting privacy, filtering
+#                    web page content, managing cookies, controlling
+#                    access, and removing ads, banners, pop-ups and
+#                    other obnoxious Internet junk.
+### END INIT INFO
+ 
+# Author: Roland Rosenfeld <roland@debian.org>
+ 
+# Do NOT "set -e"
+ 
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="filtering proxy server"
+NAME=privoxy
+DAEMON=/usr/sbin/$NAME
+PIDFILE=/var/run/$NAME
+OWNER=privoxy
+CONFIGFILE=/etc/privoxy/config
+SCRIPTNAME=/etc/init.d/$NAME
+LOGDIR=/var/log/privoxy
+DEFAULTSFILE=/etc/default/$NAME
+ 
+# Exit if the package is not installed
+[ -x "$DAEMON" ] || exit 0
+ 
+# Read configuration variable file if it is present
+[ -r $DEFAULTSFILE ] && . $DEFAULTSFILE
+ 
+# Create log directory if it does not exist
+if [ ! -d "$LOGDIR" ]; then
+    mkdir -m 750 $LOGDIR
+    chown $OWNER:adm $LOGDIR
+fi
+ 
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+ 
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
+. /lib/lsb/init-functions
+ 
+#
+# Function that starts the daemon/service
+#
+do_start()
+{
+    # Return
+    #   0 if daemon has been started
+    #   1 if daemon was already running
+    #   2 if daemon could not be started
+ 
+    stats=0
+    for c in {1..8}
+    do
+    DAEMON_ARGS="--pidfile $PIDFILE-$c.pid $CONFIGFILE-$c"
+    start-stop-daemon --start --quiet --pidfile $PIDFILE-$c.pid --exec $DAEMON --test > /dev/null \
+        || stats=1
+    start-stop-daemon --start --quiet --pidfile $PIDFILE-$c.pid --exec $DAEMON -- \
+        $DAEMON_ARGS \
+        || stats=2
+    done
+    return "$stats"
+    # Add code here, if necessary, that waits for the process to be ready
+    # to handle requests from services started subsequently which depend
+    # on this one.  As a last resort, sleep for some time.
+}
+ 
+#
+# Function that stops the daemon/service
+#
+do_stop()
+{
+    for c in {1..8}
+    do
+    # Return
+    #   0 if daemon has been stopped
+    #   1 if daemon was already stopped
+    #   2 if daemon could not be stopped
+    #   other if a failure occurred
+    start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE-$c.pid --name $NAME
+    RETVAL="$?"
+    [ "$RETVAL" = 2 ] && return 2
+    # Wait for children to finish too if this is a daemon that forks
+    # and if the daemon is only ever run from this initscript.
+    # If the above conditions are not satisfied then add some other code
+    # that waits for the process to drop all resources that could be
+    # needed by services started subsequently.  A last resort is to
+    # sleep for some time.
+    start-stop-daemon --stop --quiet --oknodo --retry=0/30/KILL/5 --exec $DAEMON
+    [ "$?" = 2 ] && return 2
+    # Many daemons don't delete their pidfiles when they exit.
+    rm -f $PIDFILE-$c.pid
+    done
+    return "$RETVAL"
+}
+ 
+#
+# Function that sends a SIGHUP to the daemon/service
+#
+do_reload() {
+    #
+    # If the daemon can reload its configuration without
+    # restarting (for example, when it is sent a SIGHUP),
+    # then implement that here.
+    #
+    start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE --name $NAME
+    return 0
+}
+ 
+ 
+case "$1" in
+  start)
+    if [ "$RUN_DAEMON" = "no" ]; then
+            [ "$VERBOSE" != no ] && log_warning_msg "Not starting $DESC (disabled in $DEFAULTSFILE)."
+            exit 0
+    fi
+ 
+    [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+    do_start
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
+    ;;
+  stop)
+    [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+    do_stop
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
+    ;;
+  #reload|force-reload)
+    #
+    # If do_reload() is not implemented then leave this commented out
+    # and leave 'force-reload' as an alias for 'restart'.
+    #
+    #log_daemon_msg "Reloading $DESC" "$NAME"
+    #do_reload
+    #log_end_msg $?
+    #;;
+  restart|force-reload)
+    #
+    # If the "reload" option is implemented then remove the
+    # 'force-reload' alias
+    #
+    if [ "$RUN_DAEMON" = "no" ]; then
+            [ "$VERBOSE" != no ] && log_warning_msg "Not restarting $DESC (disabled in $DEFAULTSFILE)."
+            exit 0
+    fi
+ 
+    log_daemon_msg "Restarting $DESC" "$NAME"
+    do_stop
+    case "$?" in
+      0|1)
+        do_start
+        case "$?" in
+            0) log_end_msg 0 ;;
+            1) log_end_msg 1 ;; # Old process is still running
+            *) log_end_msg 1 ;; # Failed to start
+        esac
+        ;;
+      *)
+          # Failed to stop
+        log_end_msg 1
+        ;;
+    esac
+    ;;
+  status)
+        status_of_proc "$DAEMON" "$NAME"
+        exit $?
+        ;;
+ 
+  *)
+    #echo "Usage: $SCRIPTNAME {start|stop|restart|reload|force-reload}" >&2
+    echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload|status}" >&2
+    exit 3
+    ;;
+esac
+ 
+:
+EOF
+echo "deseja fazer outra configuração? [s/n]"
+               read -p "Digite: " esc 
+               case $esc in 
+                S/s)
+                    
+                    sleep 2 
+                    tela_opcoes
+                    select_op
+                    ;;
+                N/n)
+
+                    echo "=========================================="                  
+                    echo "obrigado por esta utilizando esse script :)"
+                    echo "=========================================="
+                    sleep 2
+                    exit 
+                    ;;
+                *)
+                    echo "================================="
+                    echo " voce nao digitou corretamente !"
+                    echo "================================="
+                    sleep 2                     
+                    exit
+                     ;;
+                    esac
+                    ;;
+            3) #configurar o iptalbes  e o firewall
+               echo"========================================="
+               echo "              dsaroot-script            "
+               echo "========================================"
+               cat <EOF> configuração-firewall.sh
+               #!/bin/sh
+               #Configuração do Firewall através do iptables
+               #Auto Script
+               #script de firewall
+               #Uso: firewall start|stop|restart"
+               mkdir /etc/configuracao_personalizada/macsliberadosfirewall
+               touch /etc/init.d/firewall
+               mkdir /etc/configuracao_personalizada/portsblo
+               mkdir etc/configuracao_personalizada/sitesnegados
+               #Declaração de variáveis
+                PATH=/sbin:/bin:/usr/sbin:/usr/bin
+                IPTABLES="/sbin/iptables"
+                MACLIST="/etc/configuracao_personalizada/macsliberadosfirewall"
+                PROGRAMA="/etc/init.d/firewall"
+
+                #portas liberadas e bloqueadas
+                PORTSLIB="/etc/configuracao_personalizada/portslib"
+                PORTSBLO="/etc/configuracao_personalizada/portsblo"
+
+                #Interfaces de Rede
+                LAN=eth1
+                WAN=eth0
+                REDE="192.168.253.0/24"
+
+                SITESNEGADOS=/etc/configuracao_personalizada/sitesnegados
+
+                # Os diversos módulos do iptables são chamados através do modprobe
+                modprobe ip_tables
+                modprobe iptable_nat
+                modprobe ip_conntrack
+                modprobe ip_conntrack_ftp
+                modprobe ip_nat_ftp
+                modprobe ipt_LOG
+                modprobe ipt_REJECT
+                modprobe ipt_MASQUERADE
+                modprobe ipt_state
+                modprobe ipt_multiport
+                modprobe iptable_mangle
+                modprobe ipt_tos
+                modprobe ipt_limit
+                modprobe ipt_mark
+                modprobe ipt_MARK
+
+
+                case "$1" in
+                start)
+
+                #mensagem de inicialização
+                echo "| Script de Firewall - IPTABLES"
+                echo "| Uso: firewall start|stop|restart"
+                echo 
+                echo "============================================= |"
+                echo "|:INICIANDO A CONFIGURAÇÃO DO FIREWALL NETFILTER ATRAVÉS :|"
+                echo "|: DO IPTABLES :|"
+                echo "============================================= |"
+
+                $IPTABLES -F
+                $IPTABLES -F INPUT
+                $IPTABLES -F OUTPUT
+                $IPTABLES -F FORWARD
+                $IPTABLES -t mangle -F
+                $IPTABLES -t nat -F
+                $IPTABLES -X
+
+                $IPTABLES -P INPUT DROP
+                $IPTABLES -P OUTPUT ACCEPT
+                $IPTABLES -P FORWARD DROP
+
+
+                # ativar o redirecionamento no arquivo ip_forward
+                echo "1" > /proc/sys/net/ipv4/ip_forward
+                echo "ativado o redirecionamento no arquivo ip_forward"
+                echo "ON ...................................................... [ OK ]"
+
+
+                #habilitando o fluxo interno entre os processos
+                $IPTABLES -I INPUT -i lo -j ACCEPT
+                $IPTABLES -I OUTPUT -o lo -j ACCEPT
+                echo "ativado o fluxo interno entre os processos"
+                echo "ON ...................................................... [ OK ]"
+
+                #liberar as portas principais do servidor
+                for i in `cat $PORTSLIB`; do
+                $IPTABLES -A INPUT -p tcp --dport $i -j ACCEPT
+                $IPTABLES -A FORWARD -p tcp --dport $i -j ACCEPT
+                $IPTABLES -A OUTPUT -p tcp --sport $i -j ACCEPT
+                done
+                $IPTABLES -I INPUT -m state --state ESTABLISHED -j ACCEPT
+                $IPTABLES -I INPUT -m state --state RELATED -j ACCEPT
+                $IPTABLES -I OUTPUT -p icmp -o $WAN -j ACCEPT
+                $IPTABLES -I INPUT -p icmp -j ACCEPT
+                echo "ativado as portas abertas para estabelecer conexões"
+                echo "ativado a liberação das portas principais do servidor $HOSTNAME" 
+                echo "ON ...................................................... [ OK ]"
+
+                #ATIVAR O REDIRECIONAMENTO (para ambiente flexível) 
+                #LIBERAR RADIO UOL (para ambiente flexível) 
+
+                #bloquear acesso de sites negados a rede interna
+                for i in `cat $SITESNEGADOS`; do
+                $IPTABLES -t filter -A FORWARD -s $REDE -d $i -j DROP
+                $IPTABLES -t filter -A FORWARD -s $i -d $REDE -j DROP
+                $IPTABLES -t filter -A INPUT -s $i -j DROP
+                $IPTABLES -t filter -A OUTPUT -d $i -j DROP
+                done
+                echo "ativado o bloqueio de envio de pacotes com origem aos sites negados"
+                echo "ON ...................................................... [ OK ]"
+
+
+                #Bloqueio ping da morte
+                echo "0" > /proc/sys/net/ipv4/icmp_echo_ignore_all
+                $IPTABLES -N PING-MORTE
+                $IPTABLES -A INPUT -p icmp --icmp-type echo-request -j PING-MORTE
+                $IPTABLES -A PING-MORTE -m limit --limit 1/s --limit-burst 4 -j RETURN
+                $IPTABLES -A PING-MORTE -j DROP
+                echo "ativado o bloqueio a tentativa de ataque do tipo ping da morte"
+                echo "ON ...................................................... [ OK ]"
+
+
+                #bloquear ataque do tipo SYN-FLOOD
+                echo "0" > /proc/sys/net/ipv4/tcp_syncookies
+                $IPTABLES -N syn-flood
+                $IPTABLES -A INPUT -i $WAN -p tcp --syn -j syn-flood
+                $IPTABLES -A syn-flood -m limit --limit 1/s --limit-burst 4 -j RETURN
+                $IPTABLES -A syn-flood -j DROP
+                echo "ativado o bloqueio a tentativa de ataque do tipo SYN-FLOOD"
+                echo "ON ...................................................... [ OK ]"
+
+                #Bloqueio de ataque ssh de força bruta
+                $IPTABLES -N SSH-BRUT-FORCE
+                $IPTABLES -A INPUT -i $WAN -p tcp --dport 22 -j SSH-BRUT-FORCE
+                $IPTABLES -A SSH-BRUT-FORCE -m limit --limit 1/s --limit-burst 4 -j RETURN
+                $IPTABLES -A SSH-BRUT-FORCE -j DROP
+                echo "ativado o bloqueio a tentativa de ataque do tipo SSH-BRUT-FORCE"
+                echo "ON ...................................................... [ OK ]"
+
+                #Bloqueio de portas
+                for i in `cat $PORTSBLO`; do
+                $IPTABLES -A INPUT -p tcp -i $WAN --dport $i -j DROP
+                $IPTABLES -A INPUT -p udp -i $WAN --dport $i -j DROP
+                $IPTABLES -A FORWARD -p tcp --dport $i -j DROP
+                done
+
+                #bloqueio Anti-Spoofings
+                $IPTABLES -A INPUT -s 10.0.0.0/8 -i $WAN -j DROP
+                $IPTABLES -A INPUT -s 127.0.0.0/8 -i $WAN -j DROP
+                $IPTABLES -A INPUT -s 172.16.0.0/12 -i $WAN -j DROP
+                $IPTABLES -A INPUT -s 192.168.1.0/16 -i $WAN -j DROP
+                echo "ativado o bloqueio de tentativa de ataque do tipo Anti-spoofings"
+                echo "ON ...................................................... [ OK ]"
+
+
+                #Bloqueio de scanners ocultos (Shealt Scan)
+                $IPTABLES -A FORWARD -p tcp --tcp-flags SYN,ACK, FIN, -m limit --limit 1/s -j ACCEPT
+                echo "bloqueado scanners ocultos"
+                echo "ON ...................................................... [ OK ]"
+
+                #amarrar ip ao mac
+                for i in `cat $MACLIST`; do
+                #aqui cada linha do maclist é atribuída de cada vez
+
+                STATUS=`echo $i | cut -d ';' -f 1`
+                #o comando echo exibe o conteúdo da variável e o pipe "|" repassa a saída para outro comando, o cut por sua vez reparte cada linha em pedaços onde o delimitador (-d) é o ';' no parâmetro -f imprime na tela conteúdo da 1º coluna (status), a saída deste é enviada para STATUS;
+
+                IPSOURCE=`echo $i | cut -d ';' -f 2`
+                MACSOURCE=`echo $i | cut -d ';' f 3`
+                MARK=`echo $IPSOURCE | cut -d '.' -f 4`
+
+                # neste caso o IPSOURCE e o MACSOURCE recebem as outras colunas da mesma linha, faço uma ressalva para o nome do computador que eu coloquei apenas para a organização do maclist, pois neste do script contará até a 3º coluna.
+
+                #aqui neste caso o comando if está dentro do laço for 
+                #Se status = a então iptables libera a conexão através destes comandos construídos na tabela filter
+
+                if [ $STATUS = "a" ]; then
+                $IPTABLES -t filter -A FORWARD -d 0/0 -s $IPSOURCE -m mac --mac-source $MACSOURCE -j ACCEPT
+                $IPTABLES -t filter -A FORWARD -d $IPSOURCE -s 0/0 -j ACCEPT
+                $IPTABLES -t filter -A INPUT -s $IPSOURCE -d 0/0 -m mac --mac-source $MACSOURCE -j ACCEPT
+                $IPTABLES -t filter -A OUTPUT -s $IPSOURCE -d 0/0 -j ACCEPT
+                $IPTABLES -t mangle -A PREROUTING -s $IPSOURCE -j MARK --set-mark $MARK
+
+                # Se for = b então bloqueia o MAC, ele só executa este comandos se STATUS não for igual a "a".
+
+                else #se não
+                $IPTABLES -t filter -A FORWARD -m mac --mac-source $MACSOURCE -j DROP
+                $IPTABLES -t filter -A INPUT -m mac --mac-source $MACSOURCE -j DROP
+                $IPTABLES -t filter -A OUTPUT -m mac --mac-source $MACSOURCE -j DROP
+                fi # fim do se
+                done # fim do comando laço for
+                echo "Ativado a amarração do ip ao mac"
+                echo "ON ........................................................ [ OK ]"
+
+
+                #proxy transparente
+                $IPTABLES -t nat -A PREROUTING -i $LAN -p tcp --dport 80 -j REDIRECT --to-port 3128
+                echo "Proxy Transparente ativado"
+                echo "ON ........................................................ [ OK ]"
+
+
+                # ativar o mascaramento
+                $IPTABLES -t nat -A POSTROUTING -o $WAN -j MASQUERADE
+
+                # Carrega controlador de banda
+                /etc/init.d/cbq start #Para Debian
+                #/etc/rc.d/init.d/cbq start #Para Slackware
+                echo
+                echo "============================================= |"
+                echo "::TERMINADA A CONFIGURAÇÃO DO FIREWALL NETFILTER ATRAVÉS::|" 
+                echo ":: DO IPTABLES :: |" 
+                echo "============================================= |"
+                echo "FIREWALL ATIVADO - SISTEMA PREPARADO"
+              
+
+                stop)
+                $IPTABLES -F
+                $IPTABLES -F INPUT
+                $IPTABLES -F OUTPUT
+                $IPTABLES -F FORWARD
+                $IPTABLES -t mangle -F
+                $IPTABLES -t nat -F
+                $IPTABLES -X
+                $IPTABLES -Z
+
+                $IPTABLES -P INPUT ACCEPT
+                $IPTABLES -P OUTPUT ACCEPT
+                $IPTABLES -P FORWARD ACCEPT
+
+                /etc/init.d/cbq stop #Para Debian
+                #/etc/rc.d/init.d/cbq stop #Para Slackware
+                echo "FIREWALL DESCARREGADO - SISTEMA LIBERADO"
+                ;;
+
+                restart)
+                $PROGRAMA stop
+                $PROGRAMA start
+                ;;
+                *)
+                echo "Use: $N {start|stop|restart}" >&2
+                echo -e "{TEXTO}33[01;31mATENÇÃO"; tput sgr0
+                echo "Você não colocou nenhum argumento ou algum conhecido, então Por Padrão será dado em 5 segundos um restart no firewall"
+                sleep 5
+                $PROGRAMA restart
+                exit 1
+                esac
+                exit 0
+                EOF 
+                ./configuração-firewall.sh start
+                echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    4)  #INSTALANDO GDEBI
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        apt-get install gdebi -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    5) #INSTALANDO UBUNTU TWEAK
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:tualatrix/ppa -y && apt-get update && apt-get install ubuntu-tweak -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+            *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    6)  #INSTALANDO UNETBOOTIN
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:gezakovacs/ppa -y && apt-get update && apt-get install unetbootin -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+            *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+            esac
+            ;;
+    7)  #ATUALIZANDO O SISTEMA
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        apt-get update && apt-get dist-upgrade -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+            *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    8)  #REMOVENDO PACOTE
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        read -p "DIGITE NOME DO PACOTE PARA SER REMOVIDO -> " pack
+        read -p "DESEJA REMOVE PACOTE $pack?[s/n] ->" packr
+        case $packr in
+            S|s)
+                echo
+                apt-get purge $pack
+                ;;
+            N|n)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+              *)
+                echo "DIGITOU A OPÇÃO ERRADA TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    9)  #ATUALIZAR LIBREOFFICE
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:libreoffice/ppa -y && apt-get update && apt-get dist-upgrade -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    10) #INSTALANDO NUMIX ICON
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:numix/ppa -y && apt-get update && apt-get install numix-icon-theme-circle -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    11) #INSTALANDO ATOM EDITOR DE TEXTO
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:webupd8tean/atom -y && apt-get update && apt-get install atom -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    12) #INSTALANDO BRACKETS
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:webupd8tean/brackets -y && apt-get update && apt-get install brackets -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    13) #INSTALANDO SUBLIME TEXT
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:webupd8tean/sublime-text -y && apt-get update && apt-get install sublime-text-installer -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    14) #INSTALANDO JAVA ORACLE
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:webupd8tean/java -y && apt-get update && apt-get install     oracle-java8-installer -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    15) #INSTALANDO OPENJDK
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:openjdk-r/ppa -y && apt-get update && apt-get install openjdk-8-jre -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    16) #INSTALANDO PLANK DOCK
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:ricotz/docky -y && apt-get update && apt-get install plank -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    17) #INSTALANDO ELEMENTARY TWEAKS
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:mpstark/elementary-tweaks-daily -y && apt-get update && apt-get install elementary-tweaks -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    18) #INSTALANDO GCC
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        apt-get install build-essential -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    19) #INSTALANDO INKSCAPE
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        add-apt-repository ppa:inkscape.dev/stable -y && apt-get && apt-get install inkscape -y
+        echo
+        echo "DESEJA INSTALAR OUTRO PACOTE?[s/n]"
+        read -p "DIGITE: " esc
+        case $esc in
+            S|s)
+                sleep 2
+                tela_opcoes
+                select_op
+                ;;
+            N|n)
+                echo
+                echo "OBRIGADO POR BAIXAR NOSSO SCRIPT :)"
+                sleep 2
+                exit
+                ;;
+              *)
+                echo
+                echo "VOCÊ NÃO DIGITOU CORRETAMENTE!"
+                echo "TENTE NOVAMENTE!"
+                sleep 2
+                exit
+                ;;
+        esac
+        ;;
+    20) #SAINDO SO SCRIPT
+        echo
+        echo "OBRIGADO POR BAIXA NOSSO SCRIPT ✌ ¯\_(ツ)_/¯"
+        sleep 2
+        exit
+        ;;
+     *) #TRATAMENTO DE ERRO
+        echo "================================================================================"
+        echo "AKILA SCRIPT INSTALL"
+        echo "================================================================================"
+        echo "OPS!VOCÊ NÃO DIGITOU NUMERO CORRETO [1 a 20]"
+        echo "NÃO DIGITOU NENHUM NUMERO"
+        echo "TENTE NOVAMENTE!"
+        sleep 2
+        exit
+        ;;
+esac
+}
+#}}}
+#TELA DE OPÇÔES PARA USUARIO {{{
+tela_opcoes(){
+    echo "================================================================================"
+    echo "AKILA SCRIPT INSTALL ¯\_(ツ)_/¯"
+    echo "================================================================================"
+    echo "[1]UBUNTU CODEC EXTRAS            [11]ATOM EDITOR DE TEXTO"
+    echo "[2]XUBUNTU CODEC EXTRAS           [12]BRACKETS EDITOR DE TEXTO"
+    echo "[3]KUBUNTU CODEC EXTRAS           [13]SUBLIME TEXT EDITOR DE TEXTO"
+    echo "[4]GDEBI(INSTALADOR ARQUIVOS .deb)    [14]JAVA(ORACLE)"
+    echo "[5]UBUNTU TWEAK               [15]OPENJDK(JAVA)"
+    echo "[6]UNETBOOTIN             [16]PLANK DOCK"
+    echo "[7]ATUALIZAR SISTEMA          [17]ELEMENTARY TWEAKS"
+    echo "[8]REMOVE PACOTES         [18]GCC(COMPILADOR)"
+    echo "[9]ATUALIZAR LIBREOFFICE      [19]INKSCAPE"
+    echo "[10]NUMIX ICON                [20]SAIR"
+    echo "================================================================================"
+    read -p "DIGITE [1 a 20] -> " op
+    echo
+}
+#}}}
+#CHAMANDO TODAS AS FUNÇÔES {{{
+select_root
+tela_opcoes
+select_op
+#}}}
+Status API Training Shop Blog About Pricing
+© 2016 GitHub, Inc. Terms Privacy Security Contact Help
+                
+
+
+
+
+
+
+
+                                                                
